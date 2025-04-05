@@ -24,7 +24,7 @@ const contactSchema = new Schema(
       default: 'personal', 
     },
   },
-  { timestamps: true } // Додає createdAt і updatedAt
+  { timestamps: true, versionKey: false } 
 );
 
 const ContactCollection = model("contacts", contactSchema);
