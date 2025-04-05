@@ -20,7 +20,6 @@ export const deleteContact = async (id) => {
     });
     return contact;
 };
-// ContactCollection.findOne({ _id: id})
 
 
 export const updateContact = async (id, payload, options = {}) => {
@@ -34,10 +33,12 @@ export const updateContact = async (id, payload, options = {}) => {
     },
   );
 
-  if (!rawResult || !rawResult.value) return null;
 
+  if (!rawResult || !rawResult.value) {
+    return null; 
+  }
   return {
-  student: rawResult.value,
-  isNew: !rawResult?.lastErrorObject?.updatedExisting
+  contact: rawResult.value,
+  isNew: !(rawResult && rawResult.lastErrorObject?.updatedExisting),
 };
 };
