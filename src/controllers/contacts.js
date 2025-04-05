@@ -16,7 +16,7 @@ export const getContactsByIdControl = async (req, res, next) => {
   const { id } = req.params;
     const data = await getContactById(id);
     if (!data) {
-        throw createHttpError(404, `Contact with ${id} not found`);
+        throw createHttpError(404, `Contact not found`);
     }
     res.json({
         status: 200,
@@ -38,35 +38,31 @@ export const postContactControl = async (req, res) => {
     });
 }; 
 
-export const deleteContactController = async (req, res) => {
+export const deleteContactController = async (req, res,next) => {
     const { id } = req.params;
     const data = await deleteContact(id);
     if (!data) {
-        throw createHttpError(404, `Contact with ${id} not found`);
-    }
-    res.status(204).json({
-        status: 204
-    });
+    next(createHttpError(404, 'Route not found'));
+    return;
+  }
+   res.status(204).send();
 };
 
 
 export const patchContactController = async (req, res, next) => {
   const { id } = req.params;
 
-  const result = await updateContact(id, req.body, {
-    upsert: true,
-  });
+  const result = await updateContact(id, req.body);
 
   if (!result) {
-    throw createHttpError(404, `Contact with ${id} not found`);
+   next(createHttpError(404, 'Route not found'));
 
   }
 
-  const status = result.isNew ? 201 : 200;
 
-  res.status(status).json({
-    status,
-    message: `Successfully upserted a student!`,
+  res.status(200).json({
+    status: 200,
+    message: `Successfully updated a сontact!`,
     data: result.student,
   });
 };
