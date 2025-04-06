@@ -42,7 +42,7 @@ export const deleteContactController = async (req, res,next) => {
     const { id } = req.params;
     const data = await deleteContact(id);
     if (!data) {
-    next(createHttpError(404, 'Route not found'));
+    next(createHttpError(404, 'Contact not found'));
     return;
   }
    res.status(204).send();
@@ -55,7 +55,7 @@ export const patchContactController = async (req, res, next) => {
   const result = await updateContact(id, req.body);
 
   if (!result) {
-   next(createHttpError(404, 'Route not found'));
+   next(createHttpError(404, 'Contact not found'));
 
   }
 
