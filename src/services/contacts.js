@@ -14,6 +14,8 @@ export const getContacts = async ({ page = 1, perPage = 10,sortBy = "_id", sortO
 
   return {
     data,
+    page,
+    perPage,
     totalItems,
     totalPages,
     currentPage,
