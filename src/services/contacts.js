@@ -1,6 +1,27 @@
 import ContactCollection from "../db/models/Contact.js";
+import { sortList } from "../utils/parseSortParams.js";
 
-export const getContacts = async () => ContactCollection.find();
+export const getContacts = async ({ page = 1, perPage = 10,sortBy = "_id", sortOrder= sortList[0] }) => {
+  const skip = (page - 1) * perPage;
+
+  const data = await ContactCollection.find().skip(skip).limit(perPage).sort({[sortBy]: sortOrder});
+  const totalItems = await ContactCollection.countDocuments(); 
+  const totalPages = Math.ceil(totalItems / perPage);
+
+  const currentPage = page;
+  const hasPreviousPage = currentPage > 1;
+  const hasNextPage = currentPage < totalPages;
+
+  return {
+    data,
+    totalItems,
+    totalPages,
+    currentPage,
+    hasPreviousPage,
+    hasNextPage,
+  };
+};
+
 
 export const getContactById = async (id) => { 
        try {
