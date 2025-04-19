@@ -8,6 +8,7 @@ import { contactFields } from "../db/models/Contact.js";
 export const getContactsControl = async (req, res) => {
   const paginationParams = parsePaginationParams(req.query);
   const sortParams = parseSortParams(req.query, contactFields);
+
   const userId = req.user.userId;
 
   const data = await getContacts({ 
@@ -15,6 +16,7 @@ export const getContactsControl = async (req, res) => {
     ...sortParams, 
     userId 
   });
+
 
   res.json({
     status: 200,
@@ -48,6 +50,7 @@ export const postContactControl = async (req, res) => {
   };
 
   const data = await createContact(contactData);
+
 
   res.status(201).json({
     status: 201,
