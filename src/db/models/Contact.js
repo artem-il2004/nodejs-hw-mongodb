@@ -23,10 +23,18 @@ const contactSchema = new Schema(
       required: true,
       default: 'personal', 
     },
+    userId: {
+      type: Schema.Types.ObjectId,
+      ref: 'users',
+      required: true,
+    },
   },
   { timestamps: true, versionKey: false } 
 );
 
 const ContactCollection = model("contacts", contactSchema);
+
+
 export const contactFields = ['name', 'phoneNumber', 'email', 'isFavourite', 'contactType'];
 export default ContactCollection;
+
