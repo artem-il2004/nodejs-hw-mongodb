@@ -11,20 +11,29 @@ const FIFTEEN_MINUTES = 15 * 60 * 1000;
 const ONE_DAY = 24 * 60 * 60 * 1000;
 
 export const registerUser = async (payload) => {
-  const user = await userCollection.findOne({ email: payload.email });
-  if (user) throw createHttpError(409, 'Email in use');
-    const encryptedPassword = await bcrypt.hash(payload.password, 10);
+  const existingUser = await userCollection.findOne({ email: payload.email });
+  if (existingUser) throw createHttpError(409, 'Email in use');
 
-  return await userCollection.create({
+  const encryptedPassword = await bcrypt.hash(payload.password, 10);
+  const newUser = await userCollection.create({
     ...payload,
     password: encryptedPassword,
   });
+
+  await SessionsCollection.deleteOne({ userId: newUser._id });
+
+  const accessToken = randomBytes(30).toString('base64');
+  const refreshToken = randomBytes(30).toString('base64');
+
+  return await SessionsCollection.create({
+    userId: newUser._id,
+    accessToken,
+    refreshToken,
+    accessTokenValidUntil: new Date(Date.now() + FIFTEEN_MINUTES),
+    refreshTokenValidUntil: new Date(Date.now() + ONE_DAY),
+  });
 };
 
-
-
-
-/* Інший код файлу */
 
 export const loginUser = async (payload) => {
   const user = await userCollection.findOne({ email: payload.email });
