@@ -9,7 +9,6 @@ export const getContactsControl = async (req, res) => {
   const paginationParams = parsePaginationParams(req.query);
   const sortParams = parseSortParams(req.query, contactFields);
   const userId = req.user;
-  console.log(userId);
   
   const data = await getContacts({ 
     ...paginationParams, 
