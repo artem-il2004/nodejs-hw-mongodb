@@ -34,7 +34,5 @@ const contactSchema = new Schema(
 
 const ContactCollection = model("contacts", contactSchema);
 
-
 export const contactFields = ['name', 'phoneNumber', 'email', 'isFavourite', 'contactType'];
 export default ContactCollection;
-

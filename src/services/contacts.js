@@ -1,7 +1,6 @@
 import ContactCollection from "../db/models/Contact.js";
 import { sortList } from "../utils/parseSortParams.js";
 
-
 export const getContacts = async ({ 
   page = 1, 
   perPage = 10, 
@@ -10,7 +9,6 @@ export const getContacts = async ({
   userId 
 }) => {
   const skip = (page - 1) * perPage;
-
 
   const query = { userId };
 
@@ -31,14 +29,13 @@ export const getContacts = async ({
     data,
     totalItems,
     totalPages,
-    currentPage,
     hasPreviousPage,
     hasNextPage,
   };
 };
 
 
-export const getContactById = async (id, userId) => { 
+export const getContactById = async (id,userId) => { 
   try {
     const contactById = await ContactCollection.findOne({ _id: id, userId });
     return contactById;

@@ -8,20 +8,27 @@ import { contactFields } from "../db/models/Contact.js";
 export const getContactsControl = async (req, res) => {
   const paginationParams = parsePaginationParams(req.query);
   const sortParams = parseSortParams(req.query, contactFields);
-
-  const userId = req.user.userId;
-
+  const userId = req.user;
+  console.log(userId);
+  
   const data = await getContacts({ 
     ...paginationParams, 
     ...sortParams, 
     userId 
   });
 
-
   res.json({
     status: 200,
     message: "Successfully found contacts!",
-    data,
+    data: {
+      data: data.data,
+      page: paginationParams.page,
+      perPage: paginationParams.perPage,
+      totalItems: data.totalItems,
+      totalPages: data.totalPages,
+      hasPreviousPage: data.hasPreviousPage,
+      hasNextPage: data.hasNextPage,
+    },
   });
 };
 
@@ -50,7 +57,6 @@ export const postContactControl = async (req, res) => {
   };
 
   const data = await createContact(contactData);
-
 
   res.status(201).json({
     status: 201,
