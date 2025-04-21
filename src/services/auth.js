@@ -25,6 +25,7 @@ const userObject = newUser.toObject();
 delete userObject.password;
 
 return userObject;
+
 };
 
 export const loginUser = async (payload) => {

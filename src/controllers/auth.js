@@ -24,6 +24,7 @@ export const loginUserController = async (req, res) => {
     },
   });
 };
+
 export const registerController = async (req, res) => {
   const user = await registerUser(req.body);
 
