@@ -10,17 +10,22 @@ import { SessionsCollection } from '../db/models/Session.js';
 const FIFTEEN_MINUTES = 15 * 60 * 1000;
 const ONE_DAY = 24 * 60 * 60 * 1000;
 
-
 export const registerUser = async (payload) => {
   const user = await userCollection.findOne({ email: payload.email });
   if (user) throw createHttpError(409, 'Email in use');
   
   const encryptedPassword = await bcrypt.hash(payload.password, 10);
 
-  return await userCollection.create({
+ const newUser = await userCollection.create({
     ...payload,
     password: encryptedPassword,
   });
+
+const userObject = newUser.toObject();
+delete userObject.password;
+
+return userObject;
+
 };
 
 export const loginUser = async (payload) => {
