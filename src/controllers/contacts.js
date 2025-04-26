@@ -52,20 +52,6 @@ export const getContactsByIdControl = async (req, res, next) => {
   });
 };
 
-export const postContactControl = async (req, res) => {
-  const contactData = {
-    ...req.body,
-    userId: req.user._id,
-  };
-
-  const data = await createContact(contactData);
-
-  res.status(201).json({
-    status: 201,
-    message: "Successfully created a contact!",
-    data,
-  });
-};
 
 export const deleteContactController = async (req, res, next) => {
   const { id } = req.params;
@@ -113,4 +99,33 @@ export const patchContactController = async (req, res, next) => {
       photo: result.contact.photo 
     }
   });
+};
+
+export const postContactControl = async (req, res, next) => {
+    const userId = req.user._id;
+    const photo = req.file;
+
+    const createPayload = { 
+      ...req.body, 
+      userId 
+    };
+
+    if (photo) {
+      let photoUrl;
+      if (getEnvVar('ENABLE_CLOUDINARY') === 'true') {
+        photoUrl = await saveFileToCloudinary(photo);
+      } else {
+        photoUrl = await saveFileToUploadDir(photo);
+      }
+      createPayload.photo = photoUrl;
+    }
+
+    const data = await createContact(createPayload);
+
+    res.status(201).json({
+      status: 201,
+      message: 'Successfully created a contact!',
+      data,
+    });
+  
 };
