@@ -20,14 +20,13 @@ authRouter.post("/login", validateSchema(loginUserSchema),ctrlWrapper(loginUserC
 authRouter.post('/refresh', ctrlWrapper(refreshUserSessionController));
 authRouter.post('/logout', ctrlWrapper(logoutUserController));
 authRouter.post(
-  '/request-reset-email',
+  '/send-reset-email',
   validateSchema(requestResetEmailSchema),
   ctrlWrapper(requestResetEmailController),
 );
 authRouter.post(
-  '/reset-password',
+  '/reset-pwd',
   validateSchema(resetPasswordSchema),
   ctrlWrapper(resetPasswordController),
 );
-
 export default authRouter;
