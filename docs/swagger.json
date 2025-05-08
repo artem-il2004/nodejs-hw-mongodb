@@ -135,7 +135,7 @@
                     "type": "string",
                     "example": "oleh1@example.com"
                   },
-                  "isFavourite": {
+                  "isFavorite": {
                     "description": "Contact's is favourite",
                     "type": "boolean",
                     "example": false
@@ -346,14 +346,8 @@
               }
             }
           },
-          "400": {
-            "$ref": "#/components/responses/400"
-          },
           "401": {
             "$ref": "#/components/responses/401"
-          },
-          "404": {
-            "$ref": "#/components/responses/400"
           }
         }
       },
@@ -397,7 +391,7 @@
                     "type": "string",
                     "example": "oleh1@example.com"
                   },
-                  "isFavourite": {
+                  "isFavorite": {
                     "description": "Contact's is favourite",
                     "type": "boolean",
                     "example": false
