@@ -135,7 +135,7 @@
                     "type": "string",
                     "example": "oleh1@example.com"
                   },
-                  "isFavorite": {
+                  "isFavourite": {
                     "description": "Contact's is favourite",
                     "type": "boolean",
                     "example": false
@@ -391,7 +391,7 @@
                     "type": "string",
                     "example": "oleh1@example.com"
                   },
-                  "isFavorite": {
+                  "isFavourite": {
                     "description": "Contact's is favourite",
                     "type": "boolean",
                     "example": false
